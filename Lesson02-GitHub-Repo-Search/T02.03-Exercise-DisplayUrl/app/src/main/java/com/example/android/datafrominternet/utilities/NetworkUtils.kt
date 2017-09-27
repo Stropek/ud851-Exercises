@@ -13,30 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.datafrominternet.utilities;
+package com.example.android.datafrominternet.utilities
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Scanner;
+import android.net.Uri
+import java.io.IOException
+import java.io.InputStream
+import java.net.HttpURLConnection
+import java.net.MalformedURLException
+import java.net.URI
+import java.net.URL
+import java.util.Scanner
 
 /**
  * These utilities will be used to communicate with the network.
  */
-public class NetworkUtils {
+object NetworkUtils {
 
-    final static String GITHUB_BASE_URL =
-            "https://api.github.com/search/repositories";
+    internal val GITHUB_BASE_URL = "https://api.github.com/search/repositories"
 
-    final static String PARAM_QUERY = "q";
+    internal val PARAM_QUERY = "q"
 
     /*
      * The sort field. One of stars, forks, or updated.
      * Default: results are sorted by best match if no field is specified.
      */
-    final static String PARAM_SORT = "sort";
-    final static String sortBy = "stars";
+    internal val PARAM_SORT = "sort"
+    internal val sortBy = "stars"
 
     /**
      * Builds the URL used to query Github.
@@ -44,9 +46,15 @@ public class NetworkUtils {
      * @param githubSearchQuery The keyword that will be queried for.
      * @return The URL to use to query the weather server.
      */
-    public static URL buildUrl(String githubSearchQuery) {
-        // TODO (1) Fill in this method to build the proper Github query URL
-        return null;
+    fun buildUrl(githubSearchQuery: String): URL? {
+        var uri : Uri = Uri.parse(githubSearchQuery).buildUpon().build()
+        var url : URL? = null
+        try {
+            url = URL(uri.toString())
+        } catch (e: MalformedURLException) {
+            e.printStackTrace()
+        }
+        return url
     }
 
     /**
@@ -56,22 +64,23 @@ public class NetworkUtils {
      * @return The contents of the HTTP response.
      * @throws IOException Related to network and stream reading
      */
-    public static String getResponseFromHttpUrl(URL url) throws IOException {
-        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+    @Throws(IOException::class)
+    fun getResponseFromHttpUrl(url: URL): String? {
+        val urlConnection = url.openConnection() as HttpURLConnection
         try {
-            InputStream in = urlConnection.getInputStream();
+            val `in` = urlConnection.inputStream
 
-            Scanner scanner = new Scanner(in);
-            scanner.useDelimiter("\\A");
+            val scanner = Scanner(`in`)
+            scanner.useDelimiter("\\A")
 
-            boolean hasInput = scanner.hasNext();
-            if (hasInput) {
-                return scanner.next();
+            val hasInput = scanner.hasNext()
+            return if (hasInput) {
+                scanner.next()
             } else {
-                return null;
+                null
             }
         } finally {
-            urlConnection.disconnect();
+            urlConnection.disconnect()
         }
     }
 }
