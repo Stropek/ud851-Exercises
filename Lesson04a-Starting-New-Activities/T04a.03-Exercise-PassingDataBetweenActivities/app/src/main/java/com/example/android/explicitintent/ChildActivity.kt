@@ -13,23 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.explicitintent;
+package com.example.android.explicitintent
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.widget.TextView;
+import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
+import android.widget.TextView
 
-public class ChildActivity extends AppCompatActivity {
+class ChildActivity : AppCompatActivity() {
 
     /* Field to store our TextView */
-    private TextView mDisplayText;
+    private var mDisplayText: TextView? = null
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_child);
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_child)
 
         /* Typical usage of findViewById... */
-        mDisplayText = (TextView) findViewById(R.id.tv_display);
+        mDisplayText = findViewById(R.id.tv_display) as TextView
+
+        if (intent.hasExtra("NameEntry")) {
+            var text = intent.getStringExtra("NameEntry")
+            mDisplayText?.text = text
+        }
     }
 }
