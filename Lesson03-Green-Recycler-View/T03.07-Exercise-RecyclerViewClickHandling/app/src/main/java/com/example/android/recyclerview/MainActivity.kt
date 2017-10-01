@@ -13,39 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.recyclerview;
+package com.example.android.recyclerview
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
 
-// TODO (8) Implement GreenAdapter.ListItemClickListener from the MainActivity
-public class MainActivity extends AppCompatActivity {
-
-    private static final int NUM_LIST_ITEMS = 100;
-
+class MainActivity : AppCompatActivity(), GreenAdapter.ListItemClickListener {
     /*
      * References to RecyclerView and Adapter to reset the list to its
      * "pretty" state when the reset menu item is clicked.
      */
-    private GreenAdapter mAdapter;
-    private RecyclerView mNumbersList;
+    private var mAdapter: GreenAdapter? = null
+    private var mNumbersList: RecyclerView? = null
+    private var mToast: Toast? = null
 
-    // TODO (9) Create a Toast variable called mToast to store the current Toast
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
         /*
          * Using findViewById, we get a reference to our RecyclerView from xml. This allows us to
          * do things like set the adapter of the RecyclerView and toggle the visibility.
          */
-        mNumbersList = (RecyclerView) findViewById(R.id.rv_numbers);
+        mNumbersList = findViewById(R.id.rv_numbers) as RecyclerView
 
         /*
          * A LinearLayoutManager is responsible for measuring and positioning item views within a
@@ -58,52 +53,59 @@ public class MainActivity extends AppCompatActivity {
          * There are other LayoutManagers available to display your data in uniform grids,
          * staggered grids, and more! See the developer documentation for more details.
          */
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        mNumbersList.setLayoutManager(layoutManager);
+        val layoutManager = LinearLayoutManager(this)
+        mNumbersList!!.layoutManager = layoutManager
 
         /*
          * Use this setting to improve performance if you know that changes in content do not
          * change the child layout size in the RecyclerView
          */
-        mNumbersList.setHasFixedSize(true);
+        mNumbersList!!.setHasFixedSize(true)
 
-        // TODO (13) Pass in this as the ListItemClickListener to the GreenAdapter constructor
         /*
          * The GreenAdapter is responsible for displaying each item in the list.
          */
-        mAdapter = new GreenAdapter(NUM_LIST_ITEMS);
-        mNumbersList.setAdapter(mAdapter);
+        mAdapter = GreenAdapter(NUM_LIST_ITEMS, this)
+        mNumbersList!!.adapter = mAdapter
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.main, menu)
+        return true
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        int itemId = item.getItemId();
+        val itemId = item.itemId
 
-        switch (itemId) {
-            /*
+        when (itemId) {
+        /*
              * When you click the reset menu item, we want to start all over
              * and display the pretty gradient again. There are a few similar
              * ways of doing this, with this one being the simplest of those
              * ways. (in our humble opinion)
              */
-            case R.id.action_refresh:
-                // TODO (14) Pass in this as the ListItemClickListener to the GreenAdapter constructor
-                mAdapter = new GreenAdapter(NUM_LIST_ITEMS);
-                mNumbersList.setAdapter(mAdapter);
-                return true;
+            R.id.action_refresh -> {
+                mAdapter = GreenAdapter(NUM_LIST_ITEMS, this)
+                mNumbersList!!.adapter = mAdapter
+                return true
+            }
         }
 
-        return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item)
     }
 
-    // TODO (10) Override ListItemClickListener's onListItemClick method
-    // TODO (11) In the beginning of the method, cancel the Toast if it isn't null
-    // TODO (12) Show a Toast when an item is clicked, displaying that item number that was clicked
+    companion object {
+
+        private val NUM_LIST_ITEMS = 100
+    }
+
+    override fun onListItemClick(item: Int) {
+        if (mToast != null) {
+            mToast?.cancel()
+        }
+
+        mToast = Toast.makeText(this@MainActivity, "Item #${item} clicked", Toast.LENGTH_SHORT)
+        mToast?.show()
+    }
 }
