@@ -13,21 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.implicitintents;
+package com.example.android.implicitintents
 
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Toast;
+import android.content.Intent
+import android.net.Uri
+import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
+import android.view.View
+import android.widget.Toast
+import java.net.URI
 
-public class MainActivity extends AppCompatActivity {
+class MainActivity : AppCompatActivity() {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
     }
 
     /**
@@ -36,9 +36,9 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param v Button that was clicked.
      */
-    public void onClickOpenWebpageButton(View v) {
-        String urlAsString = "http://www.udacity.com";
-        openWebPage(urlAsString);
+    fun onClickOpenWebpageButton(v: View) {
+        val urlAsString = "http://www.udacity.com"
+        openWebPage(urlAsString)
     }
 
     /**
@@ -47,13 +47,15 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param v Button that was clicked.
      */
-    public void onClickOpenAddressButton(View v) {
-        // TODO (5) Store an address in a String
+    fun onClickOpenAddressButton(v: View) {
+        var address = "Janowskiego 92, 30-440, Krakow"
+//        var builder = Uri.Builder()
+//                .scheme("geo")
+//                .path("0,0")
+//                .query(address)
+//        var builderString = builder.build()
 
-        // TODO (6) Use Uri.Builder with the appropriate scheme and query to form the Uri for the address
-
-        // TODO (7) Replace the Toast with a call to showMap, passing in the Uri from the previous step
-        Toast.makeText(this, "TODO: Open a map when this button is clicked", Toast.LENGTH_SHORT).show();
+        showMap(Uri.parse("geo:0,0?q=$address"))
     }
 
     /**
@@ -62,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param v Button that was clicked.
      */
-    public void onClickShareTextButton(View v) {
-        Toast.makeText(this, "TODO: Share text when this is clicked", Toast.LENGTH_LONG).show();
+    fun onClickShareTextButton(v: View) {
+        Toast.makeText(this, "TODO: Share text when this is clicked", Toast.LENGTH_LONG).show()
     }
 
     /**
@@ -71,54 +73,53 @@ public class MainActivity extends AppCompatActivity {
      * similar to what I've done above. You can view a list of implicit Intents on the Common
      * Intents page from the developer documentation.
      *
-     * @see <http://developer.android.com/guide/components/intents-common.html/>
+     * @see <http:></http:>//developer.android.com/guide/components/intents-common.html/>
+     *
      *
      * @param v Button that was clicked.
      */
-    public void createYourOwn(View v) {
+    fun createYourOwn(v: View) {
         Toast.makeText(this,
                 "TODO: Create Your Own Implicit Intent",
                 Toast.LENGTH_SHORT)
-                .show();
+                .show()
     }
 
     /**
      * This method fires off an implicit Intent to open a webpage.
      *
      * @param url Url of webpage to open. Should start with http:// or https:// as that is the
-     *            scheme of the URI expected with this Intent according to the Common Intents page
+     * scheme of the URI expected with this Intent according to the Common Intents page
      */
-    private void openWebPage(String url) {
+    private fun openWebPage(url: String) {
         /*
          * We wanted to demonstrate the Uri.parse method because its usage occurs frequently. You
          * could have just as easily passed in a Uri as the parameter of this method.
          */
-        Uri webpage = Uri.parse(url);
+        val webpage = Uri.parse(url)
 
         /*
          * Here, we create the Intent with the action of ACTION_VIEW. This action allows the user
          * to view particular content. In this case, our webpage URL.
          */
-        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+        val intent = Intent(Intent.ACTION_VIEW, webpage)
 
         /*
          * This is a check we perform with every implicit Intent that we launch. In some cases,
          * the device where this code is running might not have an Activity to perform the action
          * with the data we've specified. Without this check, in those cases your app would crash.
          */
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(intent);
+        if (intent.resolveActivity(packageManager) != null) {
+            startActivity(intent)
         }
     }
 
+    fun showMap(uri: Uri) {
+        var intent = Intent(Intent.ACTION_VIEW)
+        intent.setData(uri)
 
-    // TODO (1) Create a method called showMap with a Uri as the single parameter
-    // Do steps 2 - 4 within the showMap method
-        // TODO (2) Create an Intent with action type, Intent.ACTION_VIEW
-
-        // TODO (3) Set the data of the Intent to the Uri passed into this method
-
-        // TODO (4) Verify that this Intent can be launched and then call startActivity
-
-
+        if (intent.resolveActivity(packageManager) != null){
+            startActivity(intent)
+        }
+    }
 }
