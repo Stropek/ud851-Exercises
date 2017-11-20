@@ -1,8 +1,9 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion "25.0.3"
     defaultConfig {
         applicationId "android.example.com.visualizerpreferences"
         minSdkVersion 10
@@ -19,6 +20,14 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:25.1.0'
-    // TODO (1) Add the gradle dependency for the support preference fragment
+    compile "com.android.support:appcompat-v7:25.4.0"
+    compile "com.android.support:preference-v7:25.4.0"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+repositories {
+    maven {
+        url 'http://dl.bintray.com/kotlin/kotlin-eap-1.2'
+    }
+    mavenCentral()
+    google()
 }

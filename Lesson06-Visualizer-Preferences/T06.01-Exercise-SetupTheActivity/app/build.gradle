@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 25
@@ -18,6 +19,16 @@ android {
 }
 
 dependencies {
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:25.1.0'
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
+repositories {
+    maven {
+        url 'http://dl.bintray.com/kotlin/kotlin-eap-1.2'
+    }
+    mavenCentral()
+}
+
+apply plugin: 'kotlin-android-extensions'

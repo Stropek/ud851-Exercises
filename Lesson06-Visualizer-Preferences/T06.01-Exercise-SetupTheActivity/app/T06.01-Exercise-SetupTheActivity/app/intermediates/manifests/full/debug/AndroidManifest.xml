@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="android.example.com.visualizerpreferences"
+    android:versionCode="1"
+    android:versionName="1.0" >
+    <!--
+ TODO (7) Modify here and inside of SettingsActivity so that VisualizerActivity is treated
+    as the parent of SettingsActivity and the up button is displayed :
+    https://developer.android.com/training/implementing-navigation/ancestral.html
+    Make sure to use the attribute android:launchMode singleTop
+    -->
+    <uses-sdk
+        android:minSdkVersion="10"
+        android:targetSdkVersion="25" />
+
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <application
+        android:allowBackup="false"
+        android:debuggable="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme" >
+        <activity android:name="android.example.com.visualizerpreferences.VisualizerActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
