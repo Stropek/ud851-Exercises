@@ -27,8 +27,8 @@
         android:defaultValue="@string/pref_color_red_value"
         android:entries="@array/colorLabels"
         android:entryValues="@array/colorValues"
-        android:key="@string/pref_color_label"
-        android:title="@string/pref_color_key"
+        android:key="@string/pref_color_key"
+        android:title="@string/pref_color_label"
         />
 
 </PreferenceScreen>
