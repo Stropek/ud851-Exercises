@@ -25,10 +25,28 @@ import android.support.v7.preference.ListPreference
 import android.support.v7.preference.Preference
 import android.support.v7.preference.PreferenceFragmentCompat
 import android.support.v7.preference.PreferenceScreen
+import android.view.View
 import android.widget.Toast
 
+class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeListener, Preference.OnPreferenceChangeListener {
+    override fun onPreferenceChange(preference: Preference?, newValue: Any?): Boolean {
+        val error: Toast = Toast.makeText(context, "Please select a number between 0.1 and 3.0", Toast.LENGTH_LONG)
 
-class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeListener {
+        val sizeKey = getString(R.string.pref_size_key)
+        if (preference?.key == sizeKey) {
+            try {
+                val fValue = newValue?.toString()?.toFloatOrNull()
+                if (fValue == null || fValue <= 0.0 || fValue > 3.0) {
+                    error.show()
+                    return false
+                }
+            } catch (ex: Exception) {
+                error.show()
+                return false
+            }
+        }
+        return true
+    }
 
     override fun onCreatePreferences(bundle: Bundle?, s: String?) {
 
@@ -47,8 +65,13 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             if (p !is CheckBoxPreference) {
                 val value = sharedPreferences.getString(p.key, "")
                 setPreferenceSummary(p, value)
+            } else if (p is EditTextPreference) {
+                p.setOnPreferenceChangeListener(this@SettingsFragment)
             }
         }
+
+        val sizePreference = findPreference(getString(R.string.pref_size_key))
+        sizePreference.onPreferenceChangeListener = this@SettingsFragment
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
@@ -77,9 +100,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
                 // Set the summary to that label
                 preference.summary = preference.entries[prefIndex]
             }
-        } else if (preference is EditTextPreference) {
-            preference.summary = value
-        }
+        } else (preference as? EditTextPreference)?.summary = value
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
