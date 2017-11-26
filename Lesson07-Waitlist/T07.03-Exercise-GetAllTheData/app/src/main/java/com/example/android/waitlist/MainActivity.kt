@@ -56,6 +56,6 @@ class MainActivity : AppCompatActivity() {
     fun getAllGuests(): Cursor {
         return mDb.query(WaitlistContract.WaitlistEntry.TABLE_NAME,
                 null, null, null, null, null,
-                "order by ${WaitlistContract.WaitlistEntry.COLUMN_TIMESTAMP}")
+                WaitlistContract.WaitlistEntry.COLUMN_TIMESTAMP)
     }
 }
