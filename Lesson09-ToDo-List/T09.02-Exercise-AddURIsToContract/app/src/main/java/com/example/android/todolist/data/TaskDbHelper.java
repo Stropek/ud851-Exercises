@@ -45,10 +45,10 @@ public class TaskDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         // Create tasks table (careful to follow SQL formatting rules)
-        final String CREATE_TABLE = "CREATE TABLE "  + TaskEntry.TABLE_NAME + " (" +
+        final String CREATE_TABLE = "CREATE TABLE "  + TaskEntry.Companion.getTABLE_NAME() + " (" +
                         TaskEntry._ID                + " INTEGER PRIMARY KEY, " +
-                        TaskEntry.COLUMN_DESCRIPTION + " TEXT NOT NULL, " +
-                        TaskEntry.COLUMN_PRIORITY    + " INTEGER NOT NULL);";
+                TaskEntry.Companion.getCOLUMN_DESCRIPTION() + " TEXT NOT NULL, " +
+                TaskEntry.Companion.getCOLUMN_PRIORITY() + " INTEGER NOT NULL);";
 
         db.execSQL(CREATE_TABLE);
     }
@@ -60,7 +60,7 @@ public class TaskDbHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TaskEntry.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TaskEntry.Companion.getTABLE_NAME());
         onCreate(db);
     }
 }

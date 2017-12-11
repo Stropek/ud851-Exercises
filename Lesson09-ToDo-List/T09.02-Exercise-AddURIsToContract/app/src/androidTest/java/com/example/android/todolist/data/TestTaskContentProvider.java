@@ -51,7 +51,7 @@ public class TestTaskContentProvider {
         /* Use TaskDbHelper to get access to a writable database */
         TaskDbHelper dbHelper = new TaskDbHelper(mContext);
         SQLiteDatabase database = dbHelper.getWritableDatabase();
-        database.delete(TaskContract.TaskEntry.TABLE_NAME, null, null);
+        database.delete(TaskContract.TaskEntry.Companion.getTABLE_NAME(), null, null);
     }
 
 
