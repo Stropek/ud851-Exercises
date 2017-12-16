@@ -144,12 +144,12 @@ public class TestTaskContentProvider {
     public void testUriMatcher() {
 
         /* Create a URI matcher that the TaskContentProvider uses */
-        UriMatcher testMatcher = TaskContentProvider.buildUriMatcher();
+        UriMatcher testMatcher = TaskContentProvider.Companion.buildUriMatcher();
 
         /* Test that the code returned from our matcher matches the expected TASKS int */
         String tasksUriDoesNotMatch = "Error: The TASKS URI was matched incorrectly.";
         int actualTasksMatchCode = testMatcher.match(TEST_TASKS);
-        int expectedTasksMatchCode = TaskContentProvider.TASKS;
+        int expectedTasksMatchCode = TaskContentProvider.Companion.getTASKS();
         assertEquals(tasksUriDoesNotMatch,
                 actualTasksMatchCode,
                 expectedTasksMatchCode);
@@ -158,7 +158,7 @@ public class TestTaskContentProvider {
         String taskWithIdDoesNotMatch =
                 "Error: The TASK_WITH_ID URI was matched incorrectly.";
         int actualTaskWithIdCode = testMatcher.match(TEST_TASK_WITH_ID);
-        int expectedTaskWithIdCode = TaskContentProvider.TASK_WITH_ID;
+        int expectedTaskWithIdCode = TaskContentProvider.Companion.getTASK_WITH_ID();
         assertEquals(taskWithIdDoesNotMatch,
                 actualTaskWithIdCode,
                 expectedTaskWithIdCode);
