@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 25
@@ -15,10 +16,17 @@ android {
             minifyEnabled false
         }
     }
+    defaultConfig {
+        vectorDrawables.useSupportLibrary = true
+    }
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:25.1.0'
-    // TODO (1) Add gradle dependency for Firebase Job Dispatcher
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    compile "com.firebase:firebase-jobdispatcher:0.8.5"
+}
+repositories {
+    mavenCentral()
 }

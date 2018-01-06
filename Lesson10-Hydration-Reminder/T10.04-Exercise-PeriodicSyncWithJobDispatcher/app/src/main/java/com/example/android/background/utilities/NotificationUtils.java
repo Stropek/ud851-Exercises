@@ -87,7 +87,7 @@ public class NotificationUtils {
     }
     private static Action ignoreReminderAction(Context context) {
         Intent ignoreReminderIntent = new Intent(context, WaterReminderIntentService.class);
-        ignoreReminderIntent.setAction(ReminderTasks.ACTION_DISMISS_NOTIFICATION);
+        ignoreReminderIntent.setAction(ReminderTasks.INSTANCE.getACTION_DISMISS_NOTIFICATION());
         PendingIntent ignoreReminderPendingIntent = PendingIntent.getService(
                 context,
                 ACTION_IGNORE_PENDING_INTENT_ID,
@@ -101,7 +101,7 @@ public class NotificationUtils {
 
     private static Action drinkWaterAction(Context context) {
         Intent incrementWaterCountIntent = new Intent(context, WaterReminderIntentService.class);
-        incrementWaterCountIntent.setAction(ReminderTasks.ACTION_INCREMENT_WATER_COUNT);
+        incrementWaterCountIntent.setAction(ReminderTasks.INSTANCE.getACTION_INCREMENT_WATER_COUNT());
         PendingIntent incrementWaterPendingIntent = PendingIntent.getService(
                 context,
                 ACTION_DRINK_PENDING_INTENT_ID,
