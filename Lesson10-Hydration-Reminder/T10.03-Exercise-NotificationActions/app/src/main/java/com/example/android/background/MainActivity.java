@@ -86,12 +86,12 @@ public class MainActivity extends AppCompatActivity implements
         mToast.show();
 
         Intent incrementWaterCountIntent = new Intent(this, WaterReminderIntentService.class);
-        incrementWaterCountIntent.setAction(ReminderTasks.ACTION_INCREMENT_WATER_COUNT);
+        incrementWaterCountIntent.setAction(ReminderTasks.INSTANCE.getACTION_INCREMENT_WATER_COUNT());
         startService(incrementWaterCountIntent);
     }
 
     public void testNotification(View view) {
-        NotificationUtils.remindUserBecauseCharging(this);
+        NotificationUtils.INSTANCE.remindUserBecauseCharging(this);
     }
 
     @Override
